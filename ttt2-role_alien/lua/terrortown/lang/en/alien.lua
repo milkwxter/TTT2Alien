@@ -1,0 +1,10 @@
+local L = LANG.GetLanguageTableReference("en")
+
+-- GENERAL ROLE LANGUAGE STRINGS
+L[ALIEN.name] = "Alien"
+L["info_popup_" .. ALIEN.name] = [[You are the Alien! Probe enough players and you will win.]]
+L["body_found_" .. ALIEN.abbr] = "They were an Alien."
+L["search_role_" .. ALIEN.abbr] = "This person was an Alien!"
+L["target_" .. ALIEN.name] = "Alien"
+L["ttt2_desc_" .. ALIEN.name] = [[The Alien can probe people to win and heal players.]]
+L["credit_" .. ALIEN.abbr .. "_all"] = "Alien, you have been awarded {num} equipment credit(s) for your performance."
