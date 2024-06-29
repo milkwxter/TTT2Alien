@@ -82,10 +82,11 @@ function SWEP:PrimaryAttack()
 		-- make a special sound
 		EmitSound( "npc/strider/striderx_pain2.wav", self:GetOwner():GetPos() )
 
+		-- spawn a cool effect
+		util.Effect("VortDispel", edata)
+
 		--if the entity he hit was a ragdoll
 		if hitEnt:GetClass() == "prop_ragdoll" then
-			-- if he hits a body spawn a cool effect
-			util.Effect("VortDispel", edata)
 			-- warn player it does nothing to ragdolls
 			if SERVER then
 				local owner = self:GetOwner()
@@ -94,9 +95,6 @@ function SWEP:PrimaryAttack()
 		end
 		--if the entity he hit was a player
 		if hitEnt:IsPlayer() then
-			-- if he hits a player spawn a cool effect
-			util.Effect("VortDispel", edata)
-			
 			-- heal the target alien style
 			if hitEnt:Health() + 25 > hitEnt:GetMaxHealth() then
 				hitEnt:SetHealth(hitEnt:GetMaxHealth())
