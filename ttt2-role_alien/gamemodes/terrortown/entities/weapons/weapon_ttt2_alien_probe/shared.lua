@@ -102,8 +102,8 @@ function SWEP:PrimaryAttack()
 				hitEnt:SetHealth(hitEnt:Health() + 25)
 			end
 			
-			--runs hook that will increase bodies by one when the vulture consumes one
-			--hook.Run("EVENT_VULT_CONSUME")
+			-- runs hook that will attempt to increase probed players by 1
+			hook.Run("EVENT_ALIEN_PROBE")
 		end
 	end
 

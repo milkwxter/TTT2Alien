@@ -36,7 +36,6 @@ if SERVER then
 	hook.Add("TTTCheckForWin", "AlienCheckWin", function()
 		if roles.ALIEN.shouldWin then
 			roles.ALIEN.shouldWin = false
-
 			return TEAM_ALIEN
 		end
 	end)

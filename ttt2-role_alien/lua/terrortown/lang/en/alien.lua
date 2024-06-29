@@ -2,6 +2,8 @@ local L = LANG.GetLanguageTableReference("en")
 
 -- GENERAL ROLE LANGUAGE STRINGS
 L[ALIEN.name] = "Alien"
+L[ALIEN.defaultTeam] = "Team Alien"
+L["hilite_win_" .. ALIEN.defaultTeam] = "TEAM ALIEN WON"
 L["info_popup_" .. ALIEN.name] = [[You are the Alien! Probe enough players and you will win.]]
 L["body_found_" .. ALIEN.abbr] = "They were an Alien."
 L["search_role_" .. ALIEN.abbr] = "This person was an Alien!"
