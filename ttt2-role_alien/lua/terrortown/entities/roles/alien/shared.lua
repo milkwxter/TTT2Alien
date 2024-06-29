@@ -43,12 +43,19 @@ if SERVER then
 	
 	-- Give Loadout on respawn and rolechange
 	function ROLE:GiveRoleLoadout(ply, isRoleChange)
+        -- save original player model
 		self.alienOriginalModel = ply:GetModel()
+        -- give new alien model
 		ply:SetModel( "models/player/howardalien.mdl" )
+        -- strip alien probe
+        ply:GiveEquipmentWeapon( "weapon_ttt2_alien_probe" )
 	end
 
 	-- Remove Loadout on death and rolechange
 	function ROLE:RemoveRoleLoadout(ply, isRoleChange)
+        -- give original model back
 		ply:SetModel( self.alienOriginalModel )
+        -- strip alien probe
+        ply:StripWeapon( "weapon_ttt2_alien_probe" )
 	end
 end
