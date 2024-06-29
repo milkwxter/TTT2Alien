@@ -5,9 +5,9 @@ end
 SWEP.HoldType               = "knife"
 
 if CLIENT then
-   SWEP.PrintName           = "Alien Probe"
+   SWEP.PrintName           = "alien_probe_name"
    SWEP.Slot                = 8
-   SWEP.ViewModelFlip       = false
+   SWEP.ViewModelFlip       = true
    SWEP.ViewModelFOV        = 90
    SWEP.DrawCrosshair       = false
 	
@@ -96,10 +96,11 @@ function SWEP:PrimaryAttack()
 		--if the entity he hit was a player
 		if hitEnt:IsPlayer() then
 			-- heal the target alien style
-			if hitEnt:Health() + 25 > hitEnt:GetMaxHealth() then
+			local toHeal = GetConVar("ttt2_alien_probe_healing"):GetInt()
+			if hitEnt:Health() + toHeal > hitEnt:GetMaxHealth() then
 				hitEnt:SetHealth(hitEnt:GetMaxHealth())
 			else
-				hitEnt:SetHealth(hitEnt:Health() + 25)
+				hitEnt:SetHealth(hitEnt:Health() + toHeal)
 			end
 			
 			-- runs hook that will attempt to increase probed players by 1
@@ -107,9 +108,9 @@ function SWEP:PrimaryAttack()
 		end
 	end
 
-   if SERVER then
-      self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
-   end
+   	if SERVER then
+		self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
+   	end
    
    self:GetOwner():LagCompensation(false)
 end

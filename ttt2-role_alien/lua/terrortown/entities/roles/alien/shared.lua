@@ -58,3 +58,27 @@ if SERVER then
         ply:StripWeapon( "weapon_ttt2_alien_probe" )
 	end
 end
+
+
+-- adding convars to the TTT2 menu
+if CLIENT then
+    function ROLE:AddToSettingsMenu(parent)
+        local form = vgui.CreateTTT2Form(parent, "header_roles_additional")
+		
+        form:MakeSlider({
+            serverConvar = "ttt2_alien_probed_players_win_threshold",
+            label = "label_alien_probed_players_win_threshold",
+            min = 2,
+            max = 16,
+            decimal = 0,
+        })
+
+		form:MakeSlider({
+            serverConvar = "ttt2_alien_probe_healing",
+            label = "label_alien_probe_healing",
+            min = 1,
+            max = 100,
+            decimal = 0,
+        })
+    end
+end

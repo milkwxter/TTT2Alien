@@ -1,15 +1,13 @@
 ALIEN_DATA = {}
 ALIEN_DATA.amount_probed = 0
-ALIEN_DATA.amount_to_win = 4
+ALIEN_DATA.amount_to_win = GetConVar("ttt2_alien_probed_players_win_threshold"):GetInt()
 
 if CLIENT then
 	net.Receive("ttt2_role_alien_update", function()
 		ALIEN_DATA.amount_probed = net.ReadUInt(16)
 		ALIEN_DATA.amount_to_win = net.ReadUInt(16)
 	end)
-end
-
-if SERVER then
+else
     util.AddNetworkString("ttt2_role_alien_update")
 end
 
@@ -34,8 +32,7 @@ end
 if SERVER then
 	hook.Add("TTTBeginRound", "ttt_update_alien_threshold", function()
 		-- Gets the updated threshold (if it was updated)
-		-- ALIEN_DATA is the servers amount, self is the clients amount
-		ALIEN_DATA.amount_to_win = 4
+		ALIEN_DATA.amount_to_win = GetConVar("ttt2_alien_probed_players_win_threshold"):GetInt()
 		--Sends to client
 		net.Start("ttt2_role_alien_update")
 		net.WriteUInt(ALIEN_DATA.amount_probed, 16)
@@ -47,6 +44,7 @@ end
 -- Function that increases probed players
 local function incAlienCounter()
     ALIEN_DATA:AddProbed()
+
 	-- if alien has probed enough, then he wins
 	if(ALIEN_DATA:GetProbedAmount() >= ALIEN_DATA:GetAmountToWin()) then
         roles.ALIEN.shouldWin = true
