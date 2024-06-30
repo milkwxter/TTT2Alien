@@ -9,6 +9,7 @@ if CLIENT then
 		ALIEN_DATA.amount_to_win = net.ReadUInt(16)
 	end)
 else
+	resource.AddWorkshop("3278424620") -- make sure files get downloaded right
     util.AddNetworkString("ttt2_role_alien_update")
 end
 
