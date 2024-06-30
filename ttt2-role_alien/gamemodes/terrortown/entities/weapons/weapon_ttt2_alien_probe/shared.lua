@@ -7,8 +7,8 @@ SWEP.HoldType               = "knife"
 if CLIENT then
    SWEP.PrintName           = "alien_probe_name"
    SWEP.Slot                = 8
-   SWEP.ViewModelFlip       = true
-   SWEP.ViewModelFOV        = 90
+   SWEP.ViewModelFlip       = false
+   SWEP.ViewModelFOV        = 70
    SWEP.DrawCrosshair       = false
 	
    SWEP.EquipMenuData = {
@@ -23,8 +23,8 @@ end
 SWEP.Base                   = "weapon_tttbase"
 
 SWEP.UseHands               = true
-SWEP.ViewModel              = "models/weapons/cstrike/c_knife_t.mdl"
-SWEP.WorldModel             = "models/weapons/w_knife_t.mdl"
+SWEP.ViewModel              = "models/weapons/c_aliendisintegrator.mdl"
+SWEP.WorldModel             = "models/weapons/w_aliendisintegrator.mdl"
 
 SWEP.Primary.Damage         = 0
 SWEP.Primary.ClipSize       = -1
@@ -71,7 +71,7 @@ function SWEP:PrimaryAttack()
 
    -- effects
 	if IsValid(hitEnt) then
-		self:SendWeaponAnim( ACT_VM_MISSCENTER )
+		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
 		local edata = EffectData()
 		edata:SetStart(spos)

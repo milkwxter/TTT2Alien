@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\poncho\alienrifle\dlc051stpersonalienrifle"
+	"$selfillummask" "models\poncho\alienrifle\dlc051stpersonalienrifle_g"
+	"$Selfillum" "1"
+	"$bumpmap"	"models\poncho\alienrifle\dlc051stpersonalienrifle_n"
+	"$surfaceprop" "Metal"
+	"$surfaceprop2" "Metal"
+	"$envmapcontrast" 1
+	"$envmapsaturation" 1
+	"$nocull" 1
+	"$model" "1"
+	"$phong" "1"
+	"$phongexponent" "15"
+	"$phongboost" "0.4"
+	"$phongalbedotint" "1"
+	"$phongtint" "[1 .95 .95]"
+	"$phongfresnelranges"	"[0.5 6 10]"
+	"$ambientocclusion" "1"
+}

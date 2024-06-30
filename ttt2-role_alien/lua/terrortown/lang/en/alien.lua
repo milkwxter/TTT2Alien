@@ -12,3 +12,5 @@ L["ttt2_desc_" .. ALIEN.name] = [[The Alien can probe people to win and heal pla
 
 -- ALIEN SPECIFIC ROLE STRINGS
 L["alien_probe_name"]    = "Alien's Probe"
+
+-- TODO: ADD MORE FUCKING STRINGS FOR CONVARS
