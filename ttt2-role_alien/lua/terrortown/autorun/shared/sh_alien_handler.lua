@@ -1,6 +1,7 @@
 ALIEN_DATA = {}
 ALIEN_DATA.amount_probed = 0
 ALIEN_DATA.amount_to_win = GetConVar("ttt2_alien_probed_players_win_threshold"):GetInt()
+ALIEN_DATA.probedTable = {}
 
 if CLIENT then
 	net.Receive("ttt2_role_alien_update", function()
@@ -41,29 +42,40 @@ if SERVER then
 	end)
 end
 
--- Function that increases probed players
-local function incAlienCounter()
-    ALIEN_DATA:AddProbed()
-
-	-- if alien has probed enough, then he wins
-	if(ALIEN_DATA:GetProbedAmount() >= ALIEN_DATA:GetAmountToWin()) then
-        roles.ALIEN.shouldWin = true
-        ALIEN_DATA.amount_probed = 0
-    end
-end
-
 -- reset stuff at round end AND start
 hook.Add("TTTEndRound", "AlienEndRound", function()
 	roles.ALIEN.shouldWin = false
     ALIEN_DATA.amount_probed = 0
+	ALIEN_DATA.probedTable = {}
 end)
-
 hook.Add("TTTBeginRound", "AlienBeginRound", function()
 	roles.ALIEN.shouldWin = false
     ALIEN_DATA.amount_probed = 0
+	ALIEN_DATA.probedTable = {}
 end)
 
---hook that will attempt to increase players probed by 1
+-- hook that will attempt to increase players probed by 1
 if SERVER then
-    hook.Add("EVENT_ALIEN_PROBE", "ttt_increase_alien_counter", incAlienCounter)
+    hook.Add("EVENT_ALIEN_PROBE", "ttt_increase_alien_counter", function(probedPly)
+		-- check if the player has already been probed
+		for k, v in pairs(ALIEN_DATA.probedTable) do
+			if v == probedPly then
+				LANG.Msg(roles.GetTeamMembers(TEAM_ALIEN), "You already probed this player. Find a new specimen.", nil, MSG_MSTACK_WARN)
+				return
+			end
+		end
+
+		-- add to counter
+		ALIEN_DATA:AddProbed()
+
+		-- add player to table, so they cant be probed again
+		table.insert(ALIEN_DATA.probedTable, probedPly)
+
+		-- if alien has probed enough, then he wins
+		if(ALIEN_DATA:GetProbedAmount() >= ALIEN_DATA:GetAmountToWin()) then
+			roles.ALIEN.shouldWin = true
+			ALIEN_DATA.amount_probed = 0
+			ALIEN_DATA.probedTable = {}
+		end
+	end)
 end

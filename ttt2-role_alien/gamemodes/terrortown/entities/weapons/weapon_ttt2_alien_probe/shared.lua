@@ -48,28 +48,28 @@ end
 
 -- Override original primary attack
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
-   if not IsValid(self:GetOwner()) then return end
+   	if not IsValid(self:GetOwner()) then return end
 
-   self:GetOwner():LagCompensation(true)
+   	self:GetOwner():LagCompensation(true)
 
-   local spos = self:GetOwner():GetShootPos()
-   local sdest = spos + (self:GetOwner():GetAimVector() * 70)
+   	local spos = self:GetOwner():GetShootPos()
+   	local sdest = spos + (self:GetOwner():GetAimVector() * 70)
 
-   local kmins = Vector(1,1,1) * -10
-   local kmaxs = Vector(1,1,1) * 10
+   	local kmins = Vector(1,1,1) * -10
+   	local kmaxs = Vector(1,1,1) * 10
 
-   local tr = util.TraceHull({start=spos, endpos=sdest, filter=self:GetOwner(), mask=MASK_SHOT_HULL, mins=kmins, maxs=kmaxs})
+   	local tr = util.TraceHull({start=spos, endpos=sdest, filter=self:GetOwner(), mask=MASK_SHOT_HULL, mins=kmins, maxs=kmaxs})
 
-   -- Hull might hit environment stuff that line does not hit
-   if not IsValid(tr.Entity) then
-      tr = util.TraceLine({start=spos, endpos=sdest, filter=self:GetOwner(), mask=MASK_SHOT_HULL})
-   end
+   	-- Hull might hit environment stuff that line does not hit
+   	if not IsValid(tr.Entity) then
+   		tr = util.TraceLine({start=spos, endpos=sdest, filter=self:GetOwner(), mask=MASK_SHOT_HULL})
+   	end
 
-   local hitEnt = tr.Entity
+   	local hitEnt = tr.Entity
 
-   -- effects
+   	-- effects
 	if IsValid(hitEnt) then
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
@@ -104,7 +104,7 @@ function SWEP:PrimaryAttack()
 			end
 			
 			-- runs hook that will attempt to increase probed players by 1
-			hook.Run("EVENT_ALIEN_PROBE")
+			hook.Run("EVENT_ALIEN_PROBE", hitEnt)
 		end
 	end
 
