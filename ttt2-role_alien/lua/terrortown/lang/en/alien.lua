@@ -11,6 +11,10 @@ L["target_" .. ALIEN.name] = "Alien"
 L["ttt2_desc_" .. ALIEN.name] = [[The Alien can probe people to win and heal players.]]
 
 -- ALIEN SPECIFIC ROLE STRINGS
-L["alien_probe_name"]    = "Alien's Probe"
-
--- TODO: ADD MORE FUCKING STRINGS FOR CONVARS
+L["alien_probe_name"] = "Alien Probe"
+L["alien_probe_help"] = "Probe players & bodies to win. This also heals players."
+L["alien_probe_desc"] = "Probe enough players to win."
+L["label_alien_new_probe"] = "'{playername}' has been probed. Probing data uploaded!"
+L["label_alien_already_probed"] = "You already probed this player. Find a new specimen."
+L["label_alien_probed_players_win_threshold"] = "How many players need to be probed for Alien Victory:"
+L["label_alien_probe_healing"] = "How much healing the probe gives:"

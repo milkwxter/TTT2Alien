@@ -13,14 +13,14 @@ if CLIENT then
 	
    SWEP.EquipMenuData = {
       type = "item_weapon",
-      desc = "Probe enough players to win."
+      desc = "alien_probe_desc"
    };
 
    SWEP.Icon                = "vgui/ttt/icon_alien_probe"
    SWEP.IconLetter          = "j"
 
    function SWEP:Initialize()
-		self:AddTTT2HUDHelp("Probe players & bodies to win. This also heals players.")
+		self:AddTTT2HUDHelp("alien_probe_help")
 	end
 end
 

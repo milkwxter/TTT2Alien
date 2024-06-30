@@ -61,10 +61,13 @@ if SERVER then
 		-- check if the player has already been probed
 		for k, v in pairs(ALIEN_DATA.probedTable) do
 			if v == probedPly then
-				LANG.Msg(roles.GetTeamMembers(TEAM_ALIEN), "You already probed this player. Find a new specimen.", nil, MSG_MSTACK_WARN)
+				LANG.Msg(roles.GetTeamMembers(TEAM_ALIEN), "label_alien_already_probed", nil, MSG_MSTACK_WARN)
 				return
 			end
 		end
+
+		-- tell alien he probed em
+		LANG.Msg(roles.GetTeamMembers(TEAM_ALIEN), "label_alien_new_probe", {playername = probedPly:Nick()}, MSG_MSTACK_ROLE)
 
 		-- add to counter
 		ALIEN_DATA:AddProbed()
