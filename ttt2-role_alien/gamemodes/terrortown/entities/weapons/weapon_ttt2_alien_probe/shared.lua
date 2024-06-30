@@ -36,6 +36,7 @@ SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = true
 SWEP.Primary.Delay          = 2
 SWEP.Primary.Ammo           = "none"
+SWEP.Primary.Recoil			= 5
 
 SWEP.Kind                   = WEAPON_CLASS
 SWEP.AllowDrop              = false -- Is the player able to drop the swep
@@ -85,6 +86,15 @@ function SWEP:PrimaryAttack()
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 		EmitSound( "npc/strider/striderx_pain2.wav", self:GetOwner():GetPos() )
 		util.Effect("VortDispel", edata)
+		if (IsValid(owner) and not owner:IsNPC() and owner.ViewPunch) then
+			owner:ViewPunch(Angle(math.Rand(-0.2, -0.1) * self.Primary.Recoil, math.Rand(-0.1, 0.1) * self.Primary.Recoil, 0))
+		end
+		local recoil = self.Primary.Recoil
+		if ((game.SinglePlayer() and SERVER) or ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted())) then
+			local eyeang = self:GetOwner():EyeAngles()
+			eyeang.pitch = eyeang.pitch - recoil
+			self:GetOwner():SetEyeAngles( eyeang )
+		end
 
 		-- if the entity he hit was a ragdoll
 		if hitEnt:GetClass() == "prop_ragdoll" then
