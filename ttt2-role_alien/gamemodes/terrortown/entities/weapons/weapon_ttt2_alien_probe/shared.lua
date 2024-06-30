@@ -18,6 +18,10 @@ if CLIENT then
 
    SWEP.Icon                = "vgui/ttt/icon_alien_probe"
    SWEP.IconLetter          = "j"
+
+   function SWEP:Initialize()
+		self:AddTTT2HUDHelp("Probe players & bodies to win. This also heals players.")
+	end
 end
 
 SWEP.Base                   = "weapon_tttbase"
@@ -71,27 +75,25 @@ function SWEP:PrimaryAttack()
 
    	-- effects
 	if IsValid(hitEnt) then
-		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-
 		local edata = EffectData()
 		edata:SetStart(spos)
 		edata:SetOrigin(tr.HitPos)
 		edata:SetNormal(tr.Normal)
 		edata:SetEntity(hitEnt)
 		
-		-- make a special sound
+		-- special alien effects
+		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 		EmitSound( "npc/strider/striderx_pain2.wav", self:GetOwner():GetPos() )
-
-		-- spawn a cool effect
 		util.Effect("VortDispel", edata)
 
-		--if the entity he hit was a ragdoll
+		-- if the entity he hit was a ragdoll
 		if hitEnt:GetClass() == "prop_ragdoll" then
-			-- warn player it does nothing to ragdolls
-			if SERVER then
-				local owner = self:GetOwner()
-				LANG.Msg(owner, "You cannot probe ragdolls!", nil, MSG_MSTACK_WARN)
-			end
+			-- get player of the corpse
+			local corpsePlayer = CORPSE.GetPlayer(hitEnt)
+		   	if not IsValid(corpsePlayer) then return end
+
+			-- runs hook that will attempt to increase probed players by 1
+			hook.Run("EVENT_ALIEN_PROBE", corpsePlayer)
 		end
 		--if the entity he hit was a player
 		if hitEnt:IsPlayer() then
