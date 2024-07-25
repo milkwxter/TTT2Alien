@@ -53,6 +53,7 @@ if SERVER then
         for k, v in pairs(player.GetAll()) do
             -- no marker vision on aliens
             if v:GetTeam() == TEAM_ALIEN then continue end
+            if not v:IsActive() then continue end
             -- set up marker vision
             local mvObject = v:AddMarkerVision("alien_target")
             mvObject:SetOwner(ROLE_ALIEN)
@@ -126,4 +127,32 @@ if CLIENT then
 		mvData:AddDescriptionLine(ParT("marker_vision_distance", {distance = distance}))
 		mvData:AddDescriptionLine(TryT(mvObject:GetVisibleForTranslationKey()), COLOR_SLATEGRAY)
 	end)
+end
+
+-- alien revival!!!!!
+if SERVER then
+  hook.Add("TTT2PostPlayerDeath", "AlienKilled", function(ply, _, attacker)
+    if not IsValid(ply) or ply:GetSubRole() ~= ROLE_ALIEN then return end
+    if IsValid(attacker) and attacker:IsPlayer() and attacker:GetSubRole() == ROLE_INFECTED then return end
+
+    local spawn_delay = 20
+
+    local spawnpoint = plyspawn.GetRandomSafePlayerSpawnPoint(ply)
+    local alien_worldspawn = true
+
+    ply:Revive(
+      spawn_delay,
+      function()
+        if alien_worldspawn and spawnpoint then
+          ply:SetPos(spawnpoint.pos)
+        end
+        ply:SetHealth(100)
+        ply:ResetConfirmPlayer()
+        SendFullStateUpdate()
+      end,
+      nil,
+      false,
+      REVIVAL_BLOCK_NONE
+    )
+  end)
 end
