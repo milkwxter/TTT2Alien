@@ -47,7 +47,7 @@ if SERVER then
 		self.alienOriginalModel = ply:GetModel()
         -- give new alien model
 		ply:SetModel( "models/player/howardalien.mdl" )
-        -- strip alien probe
+        -- give alien probe
         ply:GiveEquipmentWeapon( "weapon_ttt2_alien_probe" )
 	end
 
