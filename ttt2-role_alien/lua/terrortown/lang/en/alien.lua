@@ -9,6 +9,7 @@ L["body_found_" .. ALIEN.abbr] = "They were an Alien."
 L["search_role_" .. ALIEN.abbr] = "This person was an Alien!"
 L["target_" .. ALIEN.name] = "Alien"
 L["ttt2_desc_" .. ALIEN.name] = [[The Alien can probe people to win and heal players.]]
+L["win_aliens"] = "The Aliens have probed enough specimens! Humanity is doomed!"
 
 -- ALIEN SPECIFIC ROLE STRINGS
 L["alien_probe_name"] = "Alien Probe"
