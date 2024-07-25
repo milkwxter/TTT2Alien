@@ -72,6 +72,9 @@ if SERVER then
 		-- add to counter
 		ALIEN_DATA:AddProbed()
 
+		-- tell other players what the probe counter is
+		LANG.MsgAll("label_alien_new_probe_other_players", {currProbe = ALIEN_DATA.amount_probed, maxProbe = ALIEN_DATA.amount_to_win} , MSG_MSTACK_WARN)
+
 		-- add player to table, so they cant be probed again
 		table.insert(ALIEN_DATA.probedTable, probedPly)
 
