@@ -49,6 +49,16 @@ if SERVER then
 		ply:SetModel( "models/player/howardalien.mdl" )
         -- give alien probe
         ply:GiveEquipmentWeapon( "weapon_ttt2_alien_probe" )
+        -- give marker vision to each player
+        for k, v in pairs(player.GetAll()) do
+            -- no marker vision on aliens
+            if v:GetTeam() == TEAM_ALIEN then continue end
+            -- set up marker vision
+            local mvObject = v:AddMarkerVision("alien_target")
+            mvObject:SetOwner(ROLE_ALIEN)
+            mvObject:SetVisibleFor(VISIBLE_FOR_ROLE)
+            mvObject:SyncToClients()
+		end
 	end
 
 	-- Remove Loadout on death and rolechange
@@ -86,7 +96,34 @@ end
 
 -- alien deals no damage to other players
 hook.Add("PlayerTakeDamage", "AlienNoDamage", function(ply, inflictor, killer, amount, dmginfo)
+    if not inflictor:IsPlayer() then return end
     if inflictor:GetSubRole() ~= ROLE_ALIEN then return end
 	dmginfo:ScaleDamage(0)
 	dmginfo:SetDamage(0)
 end)
+
+-- actual wallhacks part DONT TOUCH!!!!!!!!!
+if CLIENT then
+	local TryT = LANG.TryTranslation
+	local ParT = LANG.GetParamTranslation
+
+	local materialAlien = Material("vgui/ttt/dynamic/roles/icon_alien")
+
+	hook.Add("TTT2RenderMarkerVisionInfo", "HUDDrawMarkerVisionAlienTargets", function(mvData)
+		local client = LocalPlayer()
+		local ent = mvData:GetEntity()
+		local mvObject = mvData:GetMarkerVisionObject()
+
+		if not client:IsTerror() or not mvObject:IsObjectFor(ent, "alien_target") then return end
+
+		local distance = math.Round(util.HammerUnitsToMeters(mvData:GetEntityDistance()), 1)
+
+		mvData:EnableText()
+
+		mvData:AddIcon(materialAlien)
+		mvData:SetTitle(ent:Nick() .. " needs to be probed still.")
+
+		mvData:AddDescriptionLine(ParT("marker_vision_distance", {distance = distance}))
+		mvData:AddDescriptionLine(TryT(mvObject:GetVisibleForTranslationKey()), COLOR_SLATEGRAY)
+	end)
+end

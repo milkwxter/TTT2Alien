@@ -78,6 +78,9 @@ if SERVER then
 		-- add player to table, so they cant be probed again
 		table.insert(ALIEN_DATA.probedTable, probedPly)
 
+		-- remove marker vision from that body if he has it
+		probedPly:RemoveMarkerVision("alien_target")
+
 		-- if alien has probed enough, then he wins
 		if(ALIEN_DATA:GetProbedAmount() >= ALIEN_DATA:GetAmountToWin()) then
 			roles.ALIEN.shouldWin = true
