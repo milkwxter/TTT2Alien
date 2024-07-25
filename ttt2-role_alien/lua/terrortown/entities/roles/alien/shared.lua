@@ -19,6 +19,7 @@ function ROLE:PreInitialize()
     self.preventTraitorAloneCredits = true
     self.preventWin                 = true -- Can he win on his own? true means NO, false means YES
     self.unknownTeam                = false
+    self.isPublicRole               = true -- Can everyone see his role? true means YES, false means NO
 
     self.defaultTeam                = TEAM_ALIEN
 
