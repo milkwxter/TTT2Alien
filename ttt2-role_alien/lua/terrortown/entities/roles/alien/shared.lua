@@ -83,3 +83,10 @@ if CLIENT then
         })
     end
 end
+
+-- alien deals no damage to other players
+hook.Add("PlayerTakeDamage", "AlienNoDamage", function(ply, inflictor, killer, amount, dmginfo)
+    if inflictor:GetSubRole() ~= ROLE_ALIEN then return end
+	dmginfo:ScaleDamage(0)
+	dmginfo:SetDamage(0)
+end)
