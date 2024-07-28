@@ -43,18 +43,32 @@ if SERVER then
 	end)
 end
 
--- reset stuff at round end AND start
-hook.Add("TTTEndRound", "AlienEndRound", function()
-	roles.ALIEN.shouldWin = false
-    ALIEN_DATA.amount_probed = 0
-	ALIEN_DATA.probedTable = {}
-end)
-hook.Add("TTTBeginRound", "AlienBeginRound", function()
-	roles.ALIEN.shouldWin = false
-    ALIEN_DATA.amount_probed = 0
-	ALIEN_DATA.probedTable = {}
-end)
+if SERVER then
+	-- reset stuff at round end AND start
+	hook.Add("TTTEndRound", "AlienEndRound", function()
+		roles.ALIEN.shouldWin = false
+		ALIEN_DATA.amount_probed = 0
+		ALIEN_DATA.probedTable = {}
+	end)
 
+	hook.Add("TTTBeginRound", "AlienBeginRound", function()
+		roles.ALIEN.shouldWin = false
+		ALIEN_DATA.amount_probed = 0
+		ALIEN_DATA.probedTable = {}
+		
+		-- give marker vision to each player
+		for k, v in pairs(player.GetAll()) do
+			-- no marker vision on aliens
+			if v:GetTeam() == TEAM_ALIEN then continue end
+			if not v:IsActive() then continue end
+			-- set up marker vision
+			local mvObject = v:AddMarkerVision("alien_target")
+			mvObject:SetOwner(ROLE_ALIEN)
+			mvObject:SetVisibleFor(VISIBLE_FOR_ROLE)
+			mvObject:SyncToClients()
+		end
+	end)
+end
 -- hook that will attempt to increase players probed by 1
 if SERVER then
     hook.Add("EVENT_ALIEN_PROBE", "ttt_increase_alien_counter", function(probedPly)

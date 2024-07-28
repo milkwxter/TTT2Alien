@@ -49,17 +49,6 @@ if SERVER then
 		ply:SetModel( "models/player/howardalien.mdl" )
         -- give alien probe
         ply:GiveEquipmentWeapon( "weapon_ttt2_alien_probe" )
-        -- give marker vision to each player
-        for k, v in pairs(player.GetAll()) do
-            -- no marker vision on aliens
-            if v:GetTeam() == TEAM_ALIEN then continue end
-            if not v:IsActive() then continue end
-            -- set up marker vision
-            local mvObject = v:AddMarkerVision("alien_target")
-            mvObject:SetOwner(ROLE_ALIEN)
-            mvObject:SetVisibleFor(VISIBLE_FOR_ROLE)
-            mvObject:SyncToClients()
-		end
 	end
 
 	-- Remove Loadout on death and rolechange
